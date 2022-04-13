@@ -1,10 +1,15 @@
 package com.opencart.qa.pages;
 
+import org.openqa.selenium.By;
+
 public class AddToCartPage {
 	
-	public static void main(String[] args) {
-		
-		System.out.println("Add to cart Page");
+	private By cart = By.id("cart");
+	
+	public void addtocart() {
+		System.out.println("Add tp cart");
 	}
+	
+	
 
 }
