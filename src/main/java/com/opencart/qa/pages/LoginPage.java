@@ -26,7 +26,6 @@ public class LoginPage {
 	private By footerLinks = By.xpath("(//div[@class='row'])[last()]//li");
 	private By newCustText = By.xpath("(//div/h2)[1]");
 	private By headerLinks = By.cssSelector("ul.list-inline span");
-	private By myRepo = By.cssSelector("my repo");
 	private By loginErrorMessg = By.cssSelector("div.alert.alert-danger.alert-dismissible");
 
 	// 2. public page const....
