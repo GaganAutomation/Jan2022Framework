@@ -21,7 +21,7 @@ public class LoginPage {
 	private By email = By.id("input-email");
 	private By password = By.id("input-password");
 	private By loginBtn = By.xpath("//input[@value='Login']");
-	private By forgotPwd = By.linkText("Forgotten Password11");
+	private By forgotPwd = By.linkText("Forgotten Password");
 	private By registerLink = By.linkText("Register");
 	private By footerLinks = By.xpath("(//div[@class='row'])[last()]//li");
 	private By newCustText = By.xpath("(//div/h2)[1]");
