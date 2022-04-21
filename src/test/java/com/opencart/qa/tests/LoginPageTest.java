@@ -27,7 +27,7 @@ public class LoginPageTest extends BaseTest {
 		Assert.assertTrue(actUrl.contains(Constants.LOGIN_PAGE_FRACTION_URL));
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void forgotPwdLinkExistTest() {
 		Assert.assertTrue(loginPage.isForgotPwdLinkExist());
 	}
