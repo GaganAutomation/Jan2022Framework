@@ -50,6 +50,7 @@ public class LoginPage {
 
 	public AccountPage doLogin(String un, String pwd) {
 		WebElement email_id = eleUtil.waitForElementToBeVisible(email, Constants.DEFAULT_TIME_OUT);
+		email_id.clear();
 		email_id.sendKeys(un);
 		eleUtil.doSendKeys(password, pwd);
 		eleUtil.doClick(loginBtn);
