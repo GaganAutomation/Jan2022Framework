@@ -27,7 +27,7 @@ public class LoginPageTest extends BaseTest {
 		Assert.assertTrue(actUrl.contains(Constants.LOGIN_PAGE_FRACTION_URL));
 	}
 
-	@Test(enabled = false)
+	@Test
 	public void forgotPwdLinkExistTest() {
 		Assert.assertTrue(loginPage.isForgotPwdLinkExist());
 	}
@@ -43,7 +43,7 @@ public class LoginPageTest extends BaseTest {
 		Assert.assertEquals(accountPage.getAccountPageTitle(), "My Account");
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void footerLinksTest() {
 		List<String> footerLinks = loginPage.getFooterLinks();
 		System.out.println("Footer List: "+footerLinks);
