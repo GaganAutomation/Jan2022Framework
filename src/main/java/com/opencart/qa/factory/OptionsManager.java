@@ -23,6 +23,11 @@ public class OptionsManager {
 			co.addArguments("--headless");
 		if (Boolean.parseBoolean(prop.getProperty("incognito")))
 			co.addArguments("--incognito");
+		
+		if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+			 co.setPlatformName("linux");
+			 
+		}
 		return co;
 	}
 
@@ -32,6 +37,10 @@ public class OptionsManager {
 			fo.addArguments("--headless");
 		if (Boolean.parseBoolean(prop.getProperty("incognito")))
 			fo.addArguments("--incognito");
+		
+		if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+			 co.setPlatformName("linux");
+		}
 		return fo;
 	}
 

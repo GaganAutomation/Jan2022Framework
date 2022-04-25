@@ -4,15 +4,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -42,21 +46,39 @@ public class DriverFactory {
 	 */
 
 	public WebDriver init_driver(Properties prop) {
+		
 		String browserName = prop.getProperty("browser").trim();
 		System.out.println("Browser name is: " + browserName);
 		highlight = prop.getProperty("highlight").trim();
 		optionsManager = new OptionsManager(prop);
 
 		if (browserName.equalsIgnoreCase("chrome")) {
-			WebDriverManager.chromedriver().setup();
-			// driver = new ChromeDriver(optionsManager.getChromeOptions());
-			tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+			
+			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+				init_remoteWebDriver("chrome");
+			}else {
+				//local execution
+				
+				WebDriverManager.chromedriver().setup();
+				// driver = new ChromeDriver(optionsManager.getChromeOptions());
+				tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+			}
+			
+			
 		}
 
 		else if (browserName.equalsIgnoreCase("firefox")) {
-			WebDriverManager.firefoxdriver().setup();
-			// driver = new FirefoxDriver(optionsManager.getFireFoxOptions());
-			tlDriver.set(new FirefoxDriver(optionsManager.getFireFoxOptions()));
+			
+			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+				init_remoteWebDriver("firefox");
+			}else {
+				
+				WebDriverManager.firefoxdriver().setup();
+				// driver = new FirefoxDriver(optionsManager.getFireFoxOptions());
+				tlDriver.set(new FirefoxDriver(optionsManager.getFireFoxOptions()));
+				
+			}
+				
 		}
 
 		else if (browserName.equalsIgnoreCase("edge")) {
@@ -74,6 +96,32 @@ public class DriverFactory {
 		getDriver().get(prop.getProperty("url"));
 
 		return getDriver();
+	}
+
+	/**
+	 * 
+	 * This method is used for run tests on remote - docker machine
+	 * @param browserName
+	 */
+	private void init_remoteWebDriver(String browserName) {
+		System.out.println("Running the test cases on remote grid: "+ browserName);
+		
+		if(browserName.equalsIgnoreCase("chrome")) {
+			try {
+				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getChromeOptions()));
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if (browserName.equalsIgnoreCase("firefox")) {
+			try {
+				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getFireFoxOptions()));
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 	/**
