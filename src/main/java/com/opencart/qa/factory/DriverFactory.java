@@ -46,39 +46,38 @@ public class DriverFactory {
 	 */
 
 	public WebDriver init_driver(Properties prop) {
-		
+
 		String browserName = prop.getProperty("browser").trim();
 		System.out.println("Browser name is: " + browserName);
 		highlight = prop.getProperty("highlight").trim();
 		optionsManager = new OptionsManager(prop);
 
 		if (browserName.equalsIgnoreCase("chrome")) {
-			
-			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+
+			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
 				init_remoteWebDriver("chrome");
-			}else {
-				//local execution
-				
+			} else {
+				// local execution
+
 				WebDriverManager.chromedriver().setup();
 				// driver = new ChromeDriver(optionsManager.getChromeOptions());
 				tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
 			}
-			
-			
+
 		}
 
 		else if (browserName.equalsIgnoreCase("firefox")) {
-			
-			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+
+			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
 				init_remoteWebDriver("firefox");
-			}else {
-				
+			} else {
+
 				WebDriverManager.firefoxdriver().setup();
 				// driver = new FirefoxDriver(optionsManager.getFireFoxOptions());
 				tlDriver.set(new FirefoxDriver(optionsManager.getFireFoxOptions()));
-				
+
 			}
-				
+
 		}
 
 		else if (browserName.equalsIgnoreCase("edge")) {
@@ -101,27 +100,30 @@ public class DriverFactory {
 	/**
 	 * 
 	 * This method is used for run tests on remote - docker machine
+	 * 
 	 * @param browserName
 	 */
 	private void init_remoteWebDriver(String browserName) {
-		System.out.println("Running the test cases on remote grid: "+ browserName);
-		
-		if(browserName.equalsIgnoreCase("chrome")) {
+		System.out.println("Running the test cases on remote grid: " + browserName);
+
+		if (browserName.equalsIgnoreCase("chrome")) {
 			try {
-				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getChromeOptions()));
+				tlDriver.set(
+						new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getChromeOptions()));
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else if (browserName.equalsIgnoreCase("firefox")) {
 			try {
-				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getFireFoxOptions()));
+				tlDriver.set(
+						new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getFireFoxOptions()));
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
 	/**
@@ -143,12 +145,10 @@ public class DriverFactory {
 	public Properties init_properties() {
 		prop = new Properties();
 		FileInputStream ip = null;
-		
-		
+
 		// mvn clean install -Denv="qa"
 		// mvn clean install
-		
-		
+
 		String envName = System.getProperty("env");
 		System.out.println("Running tests on environment: " + envName);
 
