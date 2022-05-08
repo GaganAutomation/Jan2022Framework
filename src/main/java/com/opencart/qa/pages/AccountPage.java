@@ -21,7 +21,7 @@ public class AccountPage {
 	private By header = By.cssSelector("div#logo a");
 	private By accSecList = By.cssSelector("div#content h2");
 	private By btnSearch = By.cssSelector("div#search button");
-	
+	private By locator;
 
 	// 2. public page const....
 	public AccountPage(WebDriver driver) {
